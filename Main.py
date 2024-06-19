@@ -14,10 +14,12 @@ pygame.display.set_caption("2Dgame")
 player_sheet = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player = Player(player_sheet)
 
-
-
-
-
+# Extract a frame from the sheet
+frame_width = 22
+frame_height = 32
+scale = 2 # scale factor
+frame = 0
+player.image = player.get_image(frame, frame_width,frame_height, scale, (255,255,255)) # black? idk
 
 while True:
     for event in pygame.event.get():
