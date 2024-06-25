@@ -1,14 +1,41 @@
 import pygame
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image):
+    def __init__(self, walk_down, walk_up):
         super().__init__()
-        self.sheet = image
-        self.image = self.sheet # initial image
+        self.sheet_walk_down = self.load_frames(walk_down, 4)  # Assuming 4 frames
+        self.sheet_walk_up = self.load_frames(walk_up, 4)      # Assuming 4 frames
+        self.current_sheet = self.sheet_walk_down
+        self.index = 0
+        self.image = self.current_sheet[self.index]
         self.rect = self.image.get_rect()
-    def get_image(self, frame, width, height, scale, colour):
-        image = pygame.Surface((width, height), pygame.SRCALPHA).convert_alpha()
-        image.blit(self.sheet, (0, 0), (frame * width, 0, width, height))
-        image = pygame.transform.scale(image, (width * scale, height * scale))
-        image.set_colorkey(colour)
-        return image
+        self.rect.center = (400, 300)
+        self.animation_speed = 0.1
+        self.last_update = pygame.time.get_ticks()
+        self.is_walking = False
+
+    def load_frames(self, sheet, num_frames):
+        frames = []
+        sheet_width, sheet_height = sheet.get_size()
+        frame_width = sheet_width // num_frames
+        for i in range(num_frames):
+            frame = sheet.subsurface(pygame.Rect(i * frame_width, 0, frame_width, sheet_height))
+            frames.append(frame)
+        return frames
+
+    def update(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > 100:
+            self.index = (self.index + 1) % len(self.current_sheet)
+            self.image = self.current_sheet[self.index]
+            self.last_update = now
+
+    def walking_down(self):
+        self.current_sheet = self.sheet_walk_down
+        self.index = 0
+        self.is_walking = True
+
+    def walking_up(self):
+        self.current_sheet = self.sheet_walk_up
+        self.index = 0
+        self.is_walking = False

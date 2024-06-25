@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from Player import Player
 
 
@@ -11,23 +11,27 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("2Dgame")
 
 # Load sprite Sheets //:TODO: add more images
-player_sheet = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
-player = Player(player_sheet)
+player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
+player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
+player = Player(player_walkind_down, player_walkind_up)
 
-# Extract a frame from the sheet
-frame_width = 22
-frame_height = 32
-scale = 2 # scale factor
-frame = 0
-player.image = player.get_image(frame, frame_width,frame_height, scale, (255,255,255)) # black? idk
+sprites = pygame.sprite.Group()
+sprites.add(player)
+
+clock = pygame.time.Clock()
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                player.walking_down()
+            elif event.key == pygame.K_UP:
+                player.walking_up()
+    sprites.update()
     screen.fill((0, 255, 0))
-    screen.blit(player.image, (100,100))
+    sprites.draw(screen)
     pygame.display.flip()
     clock.tick(60)
