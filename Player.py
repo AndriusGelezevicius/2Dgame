@@ -1,10 +1,12 @@
 import pygame
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, walk_down, walk_up):
+    def __init__(self, walk_down, walk_up, walk_right, walk_left):
         super().__init__()
         self.sheet_walk_down = self.load_frames(walk_down, 8)  #  8 frames
         self.sheet_walk_up = self.load_frames(walk_up, 8)      # 8 frames
+        self.sheet_walk_right = self.load_frames(walk_right, 8)
+        self.sheet_walk_left = self.load_frames(walk_left, 8)
         self.current_sheet = self.sheet_walk_down
         self.index = 0
         self.image = self.current_sheet[self.index]
@@ -35,8 +37,15 @@ class Player(pygame.sprite.Sprite):
         self.current_sheet = self.sheet_walk_down
         self.index = 0
         self.is_walking = True
-
     def walking_up(self):
         self.current_sheet = self.sheet_walk_up
+        self.index = 0
+        self.is_walking = False
+    def walking_right(self):
+        self.current_sheet = self.sheet_walk_right
+        self.index = 0
+        self.is_walking = False
+    def walking_left(self):
+        self.current_sheet = self.sheet_walk_left
         self.index = 0
         self.is_walking = False
