@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         now = pygame.time.get_ticks()
-        if now - self.last_update > 100:
+        if self.is_walking and now - self.last_update > 100:
             self.index = (self.index + 1) % len(self.current_sheet)
             self.image = self.current_sheet[self.index]
             self.last_update = now
@@ -44,17 +44,18 @@ class Player(pygame.sprite.Sprite):
         self.rect.y -= self.speed
         if self.current_sheet != self.sheet_walk_up:
             self.current_sheet = self.sheet_walk_up
-            self.index = 0
-        self.is_walking = False
+        self.is_walking = True
     def walking_right(self):
         self.rect.x += self.speed
         if self.current_sheet != self.sheet_walk_right:
             self.current_sheet = self.sheet_walk_right
-            self.index = 0
-        self.is_walking = False
+        self.is_walking = True
     def walking_left(self):
         self.rect.x -= self.speed
         if self.current_sheet != self.sheet_walk_left:
             self.current_sheet = self.sheet_walk_left
-            self.index = 0
+        self.is_walking = True
+    def stop_walking(self):
         self.is_walking = False
+        self.index = 0
+        self.image = self.current_sheet[self.index] # Update the image to the first frame

@@ -36,6 +36,8 @@ while True:
         player.walking_right()
     elif keys[pygame.K_LEFT]:
         player.walking_left()
+    else:
+        player.stop_walking()
 
     sprites.update()
     screen.fill((0, 255, 0))
