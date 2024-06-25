@@ -12,9 +12,9 @@ class Player(pygame.sprite.Sprite):
         self.image = self.current_sheet[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = (400, 300)
-        self.animation_speed = 1
         self.last_update = pygame.time.get_ticks()
         self.is_walking = False
+        self.speed = 5
 
     def load_frames(self, sheet, num_frames):
         frames = []
@@ -34,18 +34,27 @@ class Player(pygame.sprite.Sprite):
             self.last_update = now
 
     def walking_down(self):
-        self.current_sheet = self.sheet_walk_down
-        self.index = 0
+        self.rect.y += self.speed
+        if self.current_sheet != self.sheet_walk_down:
+            self.current_sheet = self.sheet_walk_down
+
         self.is_walking = True
     def walking_up(self):
-        self.current_sheet = self.sheet_walk_up
-        self.index = 0
+
+        self.rect.y -= self.speed
+        if self.current_sheet != self.sheet_walk_up:
+            self.current_sheet = self.sheet_walk_up
+            self.index = 0
         self.is_walking = False
     def walking_right(self):
-        self.current_sheet = self.sheet_walk_right
-        self.index = 0
+        self.rect.x += self.speed
+        if self.current_sheet != self.sheet_walk_right:
+            self.current_sheet = self.sheet_walk_right
+            self.index = 0
         self.is_walking = False
     def walking_left(self):
-        self.current_sheet = self.sheet_walk_left
-        self.index = 0
+        self.rect.x -= self.speed
+        if self.current_sheet != self.sheet_walk_left:
+            self.current_sheet = self.sheet_walk_left
+            self.index = 0
         self.is_walking = False
