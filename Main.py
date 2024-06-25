@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame
 from Player import Player
 
 

@@ -3,23 +3,24 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self, walk_down, walk_up):
         super().__init__()
-        self.sheet_walk_down = self.load_frames(walk_down, 4)  # Assuming 4 frames
-        self.sheet_walk_up = self.load_frames(walk_up, 4)      # Assuming 4 frames
+        self.sheet_walk_down = self.load_frames(walk_down, 8)  #  8 frames
+        self.sheet_walk_up = self.load_frames(walk_up, 8)      # 8 frames
         self.current_sheet = self.sheet_walk_down
         self.index = 0
         self.image = self.current_sheet[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = (400, 300)
-        self.animation_speed = 0.1
+        self.animation_speed = 1
         self.last_update = pygame.time.get_ticks()
         self.is_walking = False
 
     def load_frames(self, sheet, num_frames):
         frames = []
         sheet_width, sheet_height = sheet.get_size()
-        frame_width = sheet_width // num_frames
+        frame_width = sheet_width / num_frames
         for i in range(num_frames):
             frame = sheet.subsurface(pygame.Rect(i * frame_width, 0, frame_width, sheet_height))
+            frame.set_colorkey((255,255,255))
             frames.append(frame)
         return frames
 
