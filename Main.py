@@ -1,6 +1,6 @@
 import pygame
 from Player import Player
-
+from House import House
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -11,9 +11,9 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("2Dgame")
 
 background = pygame.image.load("Images/background_grass.png").convert()
+house_image = pygame.image.load("Images/house.png").convert_alpha()
+house = House(house_image, (550,50))
 
-house = pygame.image.load("Images/house.png").convert()
-house.set_colorkey((255,255,255))
 player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
 player_walkind_right = pygame.image.load("Images/rpg_sprite_walk_right.png").convert_alpha()
@@ -21,9 +21,11 @@ player_walkind_left = pygame.image.load("Images/rpg_sprite_walk_left.png").conve
 player = Player(player_walkind_down, player_walkind_up, player_walkind_right, player_walkind_left)
 
 sprites = pygame.sprite.Group()
-sprites.add(player)
+sprites.add(player, house)
 
 clock = pygame.time.Clock()
+
+
 
 while True:
     for event in pygame.event.get():
@@ -42,8 +44,11 @@ while True:
     else:
         player.stop_walking()
 
+    if player.rect.colliderect(house.rect):
+        print("Collision")
+        player.stop_walking()
+
     screen.blit(background, (0, 0))
-    screen.blit(house, (350,50))
     sprites.update()
     sprites.draw(screen)
     pygame.display.flip()
