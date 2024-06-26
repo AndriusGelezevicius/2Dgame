@@ -11,6 +11,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("2Dgame")
 
 background = pygame.image.load("Images/background_grass.png").convert()
+
 house_image = pygame.image.load("Images/house.png").convert_alpha()
 house = House(house_image, (550,50))
 
@@ -44,9 +45,19 @@ while True:
     else:
         player.stop_walking()
 
+        # Collision detection
     if player.rect.colliderect(house.rect):
         print("Collision")
-        player.stop_walking()
+        player.stop_walking()  # Stop animation
+        # Adjust player position to avoid overlap
+        if keys[pygame.K_DOWN]:
+            player.rect.y -= player.speed
+        elif keys[pygame.K_UP]:
+            player.rect.y += player.speed
+        elif keys[pygame.K_RIGHT]:
+            player.rect.x -= player.speed
+        elif keys[pygame.K_LEFT]:
+            player.rect.x += player.speed
 
     screen.blit(background, (0, 0))
     sprites.update()
