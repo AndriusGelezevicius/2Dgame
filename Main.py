@@ -5,12 +5,15 @@ from Player import Player
 pygame.init()
 clock = pygame.time.Clock()
 
-screen_width = 1000
-screen_height = 600
+screen_width = 640
+screen_height = 640
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("2Dgame")
 
+background = pygame.image.load("Images/background_grass.png").convert()
 
+house = pygame.image.load("Images/house.png").convert()
+house.set_colorkey((255,255,255))
 player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
 player_walkind_right = pygame.image.load("Images/rpg_sprite_walk_right.png").convert_alpha()
@@ -39,8 +42,9 @@ while True:
     else:
         player.stop_walking()
 
+    screen.blit(background, (0, 0))
+    screen.blit(house, (350,50))
     sprites.update()
-    screen.fill((0, 255, 0))
     sprites.draw(screen)
     pygame.display.flip()
     clock.tick(60)
