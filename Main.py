@@ -59,6 +59,19 @@ while True:
         elif keys[pygame.K_LEFT]:
             player.rect.x += player.speed
 
+    # Boundaries of the game window
+    if player.rect.x >= 610:
+        player.rect.x = 610
+    elif player.rect.x <= 0:
+        player.rect.x = 0
+    if player.rect.y >= 590:
+        player.rect.y = 590
+    elif player.rect.y <= 0:
+        player.rect.y = 0
+
+
+
+
     screen.blit(background, (0, 0))
     sprites.update()
     sprites.draw(screen)
