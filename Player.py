@@ -39,10 +39,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.speed
         if self.current_sheet != self.sheet_walk_down:
             self.current_sheet = self.sheet_walk_down
-
         self.is_walking = True
     def walking_up(self):
-
         self.rect.y -= self.speed
         if self.current_sheet != self.sheet_walk_up:
             self.current_sheet = self.sheet_walk_up

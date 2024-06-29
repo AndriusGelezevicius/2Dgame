@@ -1,4 +1,6 @@
 import pygame
+from pygame import mixer
+
 from Player import Player
 from House import House
 
@@ -15,6 +17,8 @@ background = pygame.image.load("Images/background_grass.png").convert()
 house_image = pygame.image.load("Images/house.png").convert_alpha()
 house = House(house_image, (550,50))
 
+walking_sound = pygame.mixer.Sound("Sounds/walking_grass.mp3")
+
 player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
 player_walkind_right = pygame.image.load("Images/rpg_sprite_walk_right.png").convert_alpha()
@@ -26,22 +30,25 @@ sprites.add(player, house)
 
 clock = pygame.time.Clock()
 
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
     keys = pygame.key.get_pressed()
+    is_walking = False
     if keys[pygame.K_DOWN]:
         player.walking_down()
+        is_walking = True
     elif keys[pygame.K_UP]:
         player.walking_up()
+        is_walking = True
     elif keys[pygame.K_RIGHT]:
         player.walking_right()
+        is_walking = True
     elif keys[pygame.K_LEFT]:
         player.walking_left()
+        is_walking = True
     else:
         player.stop_walking()
 
@@ -59,7 +66,16 @@ while True:
         elif keys[pygame.K_LEFT]:
             player.rect.x += player.speed
 
-    # Boundaries of the game window
+    # Character's walking sound
+    if is_walking:
+        if not pygame.mixer.get_busy():
+            walking_sound.play()
+    else:
+        walking_sound.stop()
+
+
+
+    # character's movement boundaries
     if player.rect.x >= 610:
         player.rect.x = 610
     elif player.rect.x <= 0:
@@ -68,9 +84,6 @@ while True:
         player.rect.y = 590
     elif player.rect.y <= 0:
         player.rect.y = 0
-
-
-
 
     screen.blit(background, (0, 0))
     sprites.update()
