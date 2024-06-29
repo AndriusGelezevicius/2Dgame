@@ -21,14 +21,16 @@ class Treasure_chest(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
 
-        def update():
-            if self.animation:
-                self.animation += 1
+    def open_treasure_chest(self):
+        self.animation = True
+    def update(self):
+        if self.animation:
+            self.current_image += 0.2
 
-                if self.current_image >= len(self.treasure_chest):
-                    self.current_image = 0
-                    self.animation = False
-                self.image = self.treasure_chest[int(self.current_image)]
+            if self.current_image >= len(self.treasure_chest):
+                self.current_image = len(self.treasure_chest) - 1  # Stay on the last image
+                self.animation = False
+            self.image = self.treasure_chest[int(self.current_image)]
 
-        def open_tresure_chest():
-            self.animation = True
+
+
