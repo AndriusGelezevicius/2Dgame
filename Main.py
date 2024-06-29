@@ -1,15 +1,16 @@
 import pygame
-from pygame import mixer
+from pygame import mixer, FULLSCREEN, RESIZABLE, NOFRAME
 
 from Player import Player
 from House import House
+from Treasure_chest import Treasure_chest
 
 pygame.init()
 clock = pygame.time.Clock()
 
-screen_width = 640
-screen_height = 640
-screen = pygame.display.set_mode((screen_width, screen_height))
+SCREEN_WIDTH = 640
+SCREEN_HEIGHT = 640
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 pygame.display.set_caption("2Dgame")
 
 background = pygame.image.load("Images/background_grass.png").convert()
@@ -28,6 +29,9 @@ player = Player(player_walkind_down, player_walkind_up, player_walkind_right, pl
 sprites = pygame.sprite.Group()
 sprites.add(player, house)
 
+treasure_image = pygame.sprite.Group()
+treasure_chest = Treasure_chest(100,100)
+treasure_image.add(treasure_chest)
 clock = pygame.time.Clock()
 
 while True:
@@ -66,6 +70,7 @@ while True:
         elif keys[pygame.K_LEFT]:
             player.rect.x += player.speed
 
+
     # Character's walking sound
     if is_walking:
         if not pygame.mixer.get_busy():
@@ -76,17 +81,18 @@ while True:
 
 
     # character's movement boundaries
-    if player.rect.x >= 610:
-        player.rect.x = 610
+    if player.rect.x >= SCREEN_WIDTH - player.rect.width:
+        player.rect.x = SCREEN_WIDTH - player.rect.width
     elif player.rect.x <= 0:
         player.rect.x = 0
-    if player.rect.y >= 590:
-        player.rect.y = 590
+    if player.rect.y >= SCREEN_HEIGHT - player.rect.height:
+        player.rect.y = SCREEN_HEIGHT - player.rect.height
     elif player.rect.y <= 0:
         player.rect.y = 0
 
     screen.blit(background, (0, 0))
     sprites.update()
     sprites.draw(screen)
+    treasure_image.draw(screen)
     pygame.display.flip()
     clock.tick(60)
