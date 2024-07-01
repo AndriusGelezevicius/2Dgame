@@ -5,20 +5,15 @@ class Treasure_chest(pygame.sprite.Sprite):
         super().__init__()
         self.opened = False
         self.animation = False
-        self.treasure_chest = []
+        self.treasure_chest_images = []
 
     # Loading Treasure_chest images
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0000.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0001.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0002.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0003.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0004.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0005.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0006.png").convert_alpha())
-        self.treasure_chest.append(pygame.image.load("Images/Treasure_chest/treasure chest0007.png").convert_alpha())
+        for i in range(8):
+            self.treasure_chest_images.append(
+                pygame.image.load(f"Images/Treasure_chest/treasure chest000{i}.png").convert_alpha())
 
         self.current_image = 0
-        self.image = self.treasure_chest[self.current_image]
+        self.image = self.treasure_chest_images[self.current_image]
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
 
@@ -30,10 +25,10 @@ class Treasure_chest(pygame.sprite.Sprite):
         if self.animation:
             self.current_image += 0.2
 
-            if self.current_image >= len(self.treasure_chest):
-                self.current_image = len(self.treasure_chest) - 1  # Stay on the last image
+            if self.current_image >= len(self.treasure_chest_images):
+                self.current_image = len(self.treasure_chest_images) - 1  # Stay on the last image
                 self.animation = False
-            self.image = self.treasure_chest[int(self.current_image)]
+            self.image = self.treasure_chest_images[int(self.current_image)]
 
 
 

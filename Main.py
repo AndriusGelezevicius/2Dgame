@@ -30,8 +30,10 @@ player = Player(player_walkind_down, player_walkind_up, player_walkind_right, pl
 sprites = pygame.sprite.Group()
 sprites.add(player, house)
 
-treasure_chest = Treasure_chest(100,100)
-sprites.add(treasure_chest)
+treasure_chest1 = Treasure_chest(100,100)
+treasure_chest2 = Treasure_chest(300,350)
+treasure_chest3 = Treasure_chest(100,450)
+sprites.add(treasure_chest1, treasure_chest2, treasure_chest3)
 
 clock = pygame.time.Clock()
 
@@ -80,12 +82,13 @@ while True:
         walking_sound.stop()
 
     # Collision with treasure chest
-    if player.rect.colliderect(treasure_chest.rect):
-        if not treasure_chest.opened:
-            print("Collider with treasure chest")
-            treasure_chest.open_treasure_chest()
-            open_chest_sound.play()
-            player.stop_walking()
+    for chest in [treasure_chest1, treasure_chest2, treasure_chest3]:
+        if player.rect.colliderect(chest.rect):
+            if not chest.opened:
+                print(f"Collider with treasure chest")
+                chest.open_treasure_chest()
+                open_chest_sound.play()
+                player.stop_walking()
 
     # character's movement boundaries
     if player.rect.x >= SCREEN_WIDTH - player.rect.width:
