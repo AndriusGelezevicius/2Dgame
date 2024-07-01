@@ -3,6 +3,7 @@ import pygame
 class Treasure_chest(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
+        self.opened = False
         self.animation = False
         self.treasure_chest = []
 
@@ -22,7 +23,9 @@ class Treasure_chest(pygame.sprite.Sprite):
         self.rect.topleft = [pos_x, pos_y]
 
     def open_treasure_chest(self):
-        self.animation = True
+        if not self.opened:
+            self.opened = True
+            self.animation = True
     def update(self):
         if self.animation:
             self.current_image += 0.2

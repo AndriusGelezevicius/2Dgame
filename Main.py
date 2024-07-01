@@ -19,6 +19,7 @@ house_image = pygame.image.load("Images/house.png").convert_alpha()
 house = House(house_image, (550,50))
 
 walking_sound = pygame.mixer.Sound("Sounds/walking_grass.mp3")
+open_chest_sound = pygame.mixer.Sound("Sounds/open_chest.wav")
 
 player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
@@ -80,9 +81,11 @@ while True:
 
     # Collision with treasure chest
     if player.rect.colliderect(treasure_chest.rect):
-        print("Collider with treasure chest")
-        treasure_chest.open_treasure_chest()
-        player.stop_walking()
+        if not treasure_chest.opened:
+            print("Collider with treasure chest")
+            treasure_chest.open_treasure_chest()
+            open_chest_sound.play()
+            player.stop_walking()
 
     # character's movement boundaries
     if player.rect.x >= SCREEN_WIDTH - player.rect.width:
