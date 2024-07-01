@@ -4,6 +4,7 @@ from pygame import mixer, FULLSCREEN, RESIZABLE, NOFRAME
 from Player import Player
 from House import House
 from Treasure_chest import Treasure_chest
+from Tree_pine import Tree_pine
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -14,12 +15,19 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 pygame.display.set_caption("2Dgame")
 
 background = pygame.image.load("Images/background_grass.png").convert()
+walking_sound = pygame.mixer.Sound("Sounds/walking_grass.mp3")
+open_chest_sound = pygame.mixer.Sound("Sounds/open_chest.wav")
 
 house_image = pygame.image.load("Images/house.png").convert_alpha()
 house = House(house_image, (550,50))
 
-walking_sound = pygame.mixer.Sound("Sounds/walking_grass.mp3")
-open_chest_sound = pygame.mixer.Sound("Sounds/open_chest.wav")
+tree_pine_image_path = "Image/tree_pine.png"
+tree_pine1 = Tree_pine(tree_pine_image_path, (350,500), 3)
+tree_pine2 = Tree_pine(tree_pine_image_path, (400,550), 3)
+tree_pine3 = Tree_pine(tree_pine_image_path, (580,350), 3)
+tree_pine4 = Tree_pine(tree_pine_image_path, (550,450), 3)
+
+
 
 player_walkind_down = pygame.image.load("Images/rpg_sprite_walk_down.png").convert_alpha()
 player_walkind_up = pygame.image.load("Images/rpg_sprite_walk_up.png").convert_alpha()
@@ -28,7 +36,7 @@ player_walkind_left = pygame.image.load("Images/rpg_sprite_walk_left.png").conve
 player = Player(player_walkind_down, player_walkind_up, player_walkind_right, player_walkind_left)
 
 sprites = pygame.sprite.Group()
-sprites.add(player, house)
+sprites.add(player, house, tree_pine1, tree_pine2, tree_pine3, tree_pine4)
 
 treasure_chest1 = Treasure_chest(100,100)
 treasure_chest2 = Treasure_chest(300,350)
