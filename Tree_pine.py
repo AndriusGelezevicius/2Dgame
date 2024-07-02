@@ -8,3 +8,8 @@ class Tree_pine(pygame.sprite.Sprite):
         self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
+
+    def is_player_in_front(self, player_rect):
+        tree_bottom_y = self.rect.bottom
+
+        return player_rect >=self.rect.bottom - (self.rect.height * 0.5)

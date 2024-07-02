@@ -8,6 +8,10 @@ from Tree_pine import Tree_pine
 
 pygame.init()
 clock = pygame.time.Clock()
+# Game theme music
+mixer.music.load("Sounds/game_theme_outside.wav")
+mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.3)
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 640
@@ -110,6 +114,13 @@ while True:
 
     screen.blit(background, (0, 0))
     sprites.update()
-    sprites.draw(screen)
-    pygame.display.flip()
+
+# TODO something wrong
+    sorted_sprites = sorted(sprites, key=lambda sprite: sprite.rect.y)
+
+    for sprite in sorted_sprites:
+        screen.blit(sprite.image, sprite.rect.topleft)
+
+    #sprites.draw(screen)
+    pygame.display.update()
     clock.tick(60)
